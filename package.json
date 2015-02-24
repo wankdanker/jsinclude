@@ -4,7 +4,8 @@
   "description": "Load js and css files programatically in the browser at run-time.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify src/include.js > dist/include.js && browserify src/include.js | uglifyjs -c -m --comments > dist/include.min.js"
   },
   "repository": {
     "type": "git",
