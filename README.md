@@ -8,16 +8,23 @@ example
 
 ```html
 <html>
-<head>
-<script src="/path/to/include.js"></script>
-<script>
-include.once("/js/jquery.js");
-include.css("/css/jquery-ui.css");
-</script>
-</head>
-<body>
- Hello
-</body>
+ <head>
+  <script src="/path/to/include.js"></script>
+  <script>
+   include.once("/js/jquery.js", function () {
+    console.log('jquery is loaded'); 
+   });
+
+   include.css("/css/jquery-ui.css");
+
+   include(function () {
+    console.log('all includes are loaded');
+   });
+  </script>
+ </head>
+ <body>
+  Hello
+ </body>
 </html>
 ```
 
