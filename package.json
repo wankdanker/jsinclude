@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/wankdanker/jsinclude/issues"
   },
-  "homepage": "https://github.com/wankdanker/jsinclude"
+  "homepage": "https://github.com/wankdanker/jsinclude",
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "uglify-js": "^2.4.16"
+  }
 }
