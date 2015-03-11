@@ -14,13 +14,14 @@ include.queue = [];
 
 function include(a, onload) {
 	if (typeof(a) === 'function') {
+		include.onready.push(a);
+
 		if (include.pending == 0) {
 			include.ready();
 
 			return true;
 		}
 		else {
-			include.onready.push(a)
 			return false;
 		}
 	}
@@ -87,7 +88,12 @@ include.once = function (path, onload) {
 
 include.ready = function () {
 	for (var x = 0; x < include.onready.length; x += 1) {
+		if (!include.onready[x]) {
+			continue;
+		}
+
 		include.onready[x]();
+		include.onready[x] = null;
 	}
 }
 
