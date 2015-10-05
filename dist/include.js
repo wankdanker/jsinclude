@@ -97,14 +97,19 @@ include.ready = function () {
 	}
 }
 
-include.css = function (path) {
+include.css = function (path, opts) {
 	var head = document.getElementsByTagName('head')[0];
 	var link = document.createElement('link');
 	link.rel = "stylesheet"
 	link.type = "text/css"
 	link.href = path;
 
-	head.appendChild(link);
+	if (opts && opts.prepend) {
+		head.insertBefore(link, head.childNodes[0]);
+	}
+	else {
+		head.appendChild(link);
+	}
 }
 
 },{}],2:[function(require,module,exports){
