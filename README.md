@@ -56,6 +56,33 @@ Load a stylesheet referenced by `path`.
 * **options** : (optional)
   * **prepend** : insert the css file before all other stylesheets
 
+### include.pathAppend
+
+`pathAppend` is a configuration option that is appended to each `path`.
+
+If `pathAppend` is a function, it is called with `path` as its only argument. The return value should be a string to append to `path`.
+
+Example using a string value:
+
+```js
+var package = require('./package.json');
+
+include.pathAppend = 'v=' + package.version;
+```
+
+Example using a function:
+
+```js
+var package = require('./package.json');
+
+include.pathAppend = function (path) {
+	if (~path.indexOf('mydomain.com')) {
+		return 'v=' + package.version;
+	}
+	else return '';
+};
+```
+
 License
 -------
 

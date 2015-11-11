@@ -1,9 +1,12 @@
+"use strict";
+
 module.exports = include;
 
 include.pending = 0;
 include.onready = [];
 include.includes = {};
 include.queue = [];
+include.pathAppend = null;
 
 /* This include function implements a queued loading mechanism
  * to ensure that script files are loaded in the same order as
@@ -26,6 +29,22 @@ function include(a, onload) {
 	}
 
 	var path = a;
+	var pathAppend = include.pathAppend;
+
+	if (pathAppend) {
+		//if pathAppend is a function then call it and pass it the path
+		if (typeof(pathAppend) === 'function') {
+			pathAppend = pathAppend(path);
+		}
+
+		//if path already contains a '?' then append &
+		if (/\?/.test(path)) {
+			path += '&' + pathAppend;
+		}
+		else {
+			path += '?' + pathAppend;
+		}
+	}
 
 	include.includes[path.toLowerCase()] = { loaded : false };
 
