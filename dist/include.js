@@ -1,10 +1,13 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+"use strict";
+
 module.exports = include;
 
 include.pending = 0;
 include.onready = [];
 include.includes = {};
 include.queue = [];
+include.pathAppend = null;
 
 /* This include function implements a queued loading mechanism
  * to ensure that script files are loaded in the same order as
@@ -27,6 +30,22 @@ function include(a, onload) {
 	}
 
 	var path = a;
+	var pathAppend = include.pathAppend;
+
+	if (pathAppend) {
+		//if pathAppend is a function then call it and pass it the path
+		if (typeof(pathAppend) === 'function') {
+			pathAppend = pathAppend(path);
+		}
+
+		//if path already contains a '?' then append &
+		if (/\?/.test(path)) {
+			path += '&' + pathAppend;
+		}
+		else {
+			path += '?' + pathAppend;
+		}
+	}
 
 	include.includes[path.toLowerCase()] = { loaded : false };
 
