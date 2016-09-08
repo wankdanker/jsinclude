@@ -15,7 +15,7 @@ include.pathAppend = null;
  * loading jquery plugins before jquery is actually loaded.
  */
 
-function include(a, onload) {
+function include(a, charset, onload) {
 	if (typeof(a) === 'function') {
 		include.onready.push(a);
 
@@ -27,6 +27,11 @@ function include(a, onload) {
 		else {
 			return false;
 		}
+	}
+
+	if (typeof charset === 'function') {
+		onload = charset;
+		charset = null;
 	}
 
 	var path = a;
@@ -82,6 +87,10 @@ function include(a, onload) {
 	scr.setAttribute('language', 'javascript');
 	scr.setAttribute('type', 'text/javascript');
 
+	if (charset) {
+		scr.setAttribute('charset', charset);
+	}
+
 	if (!include.pending) {
 		//just load this right away
 		document.getElementsByTagName('head')[0].appendChild(scr);
@@ -93,7 +102,12 @@ function include(a, onload) {
 	}
 }
 
-include.once = function (path, onload) {
+include.once = function (path, charset, onload) {
+	if (typeof charset === 'function') {
+		onload = charset;
+		charset = null;
+	}
+
 	if (include.includes[path.toLowerCase()]) {
 		//file is already included;
 		if (onload) {
@@ -101,7 +115,7 @@ include.once = function (path, onload) {
 		}
 	}
 	else {
-		include(path, onload);
+		include(path, charset, onload);
 	}
 }
 
