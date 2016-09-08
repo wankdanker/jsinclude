@@ -12,7 +12,7 @@ example
   <script src="/path/to/include.js"></script>
   <script>
    include.once("/js/jquery.js", function () {
-    console.log('jquery is loaded'); 
+    console.log('jquery is loaded');
    });
 
    include.css("/css/jquery-ui.css");
@@ -31,17 +31,21 @@ example
 api
 ---
 
-### include(path [, callback])
+### include(path [, charset] [, callback])
 
-Load a script referenced by `path` and call the optinonal callback function when it has been loaded.
+Load a script referenced by `path` and call the optional callback function when it has been loaded.
+If a string valued charset is passed as the second argument, then the charset attribute will be set
+on the script element.
 
 ### include(callback)
 
 Call `callback` once all pending include files have been loaded.
 
-### include.once(path [, callback])
+### include.once(path [,charset] [, callback])
 
 Load a script referenced by `path` at most one time and call the optional callback function when it has been loaded.
+If a string valued charset is passed as the second argument, then the charset attribute will be set
+on the script element.
 
 Callback is still called if the script has already been loaded one or more times.
 
